@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html height="100%">
+  <head>
+    <title>Fetch Data From ThingSpeak</title>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+    ></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        GetData();
+      });
+ 
+      function GetData() {
+        var url =
+          'https://api.thingspeak.com/channels/1866132/feeds.json?api_key=5GGKW35T2PBTAOZP&results=2';
+        $.ajax({
+          url: url,
+          type: 'GET',
+          contentType: 'application/json',
+          //dataType: "json",
+          //crossDomain: true,
+          success: function (data, textStatus, xhr) {
+            $.each(data, function (i, item) {
+              if (i == 'feeds') {
+                var ubound = item.length;
+                $('#txtField1').val(item[ubound - 1].field1);
+                $('#txtField2').val(item[ubound - 1].field2);
+              }
+            });
+          },
+          error: function (xhr, textStatus, errorThrown) {
+            alert(errorThrown);
+          },
+        });
+ 
+        setTimeout(GetData, 10000);
+      }
+    </script>
+  </head>
+  <body height="100%">
+    <h3>Table 1:</h3>
+    <input id="txtField1" type="text" /><br>
+    <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/1866132/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15"></iframe>
+    <h3>Table 2:</h3>
+    <input id="txtField2" type="text" /><br>
+    <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/1866132/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15"></iframe>
+  </body>
+</html>
+ 
+
