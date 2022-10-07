@@ -1,0 +1,7 @@
+Clock to remind user to have daily check(Default 10 am)
+
+Save data from ThinkSpeak to postgresql
+
+Show data trend
+
+Report of data
