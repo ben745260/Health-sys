@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html height="100%">
   <head>
-    <title>Fetch Data From ThingSpeak</title>
+    <title>Import Data</title>
     <script
       type="text/javascript"
       src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
@@ -24,8 +24,9 @@
             $.each(data, function (i, item) {
               if (i == 'feeds') {
                 var ubound = item.length;
-                $('#txtField1').val(item[ubound - 1].field1);
-                $('#txtField2').val(item[ubound - 1].field2);
+                $('#id_data_temperature').val(item[ubound - 1].field1);
+                $('#id_data_heartBeat').val(item[ubound - 1].field2);
+                $('#id_data_bloodPresusure').val(item[ubound - 1].field3);
                 var my_input1 = document.getElementById('txtField1').value;
                 var my_input2 = document.getElementById('txtField2').value;
 
@@ -44,7 +45,8 @@
       }
     </script>
   </head>
-  <body height="100%">
+  {% include 'main/navbar.html' %}
+  <!-- <body height="100%">
     <h3>Table 1:</h3>
     <input id="txtField1" type="text" /><br />
     <iframe
@@ -63,5 +65,54 @@
     ></iframe
     ><br/>
     <input id="sum" type="text" /><br />
+  </body> -->
+  <body height="100%">
+    <!-- {{healthData}} -->
+    <form action="" method="POST">
+      {% csrf_token %}
+        <table>
+          <tr>
+            <th>
+              {{form.data_temperature.label}}
+            </th>
+            <td>
+              {{form.data_temperature}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              {{form.data_heartBeat.label}}
+            </th>
+            <td>
+              {{form.data_heartBeat}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              {{form.data_bloodPressure.label}}
+            </th>
+            <td>
+              {{form.data_bloodPressure}}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              {{form.remark.label}}
+            </th>
+            <td>
+              {{form.remark}}
+            </td>
+          </tr>
+        </table>
+        <div class="form-group col-md-2">
+            <input class="btn btn-success" style="margin-top: 30px;" type="submit" value="SAVE" onclick="saveAlert()"/>
+        </div>
+      </div>
+  </form>
   </body>
 </html>
+<script>
+  // function saveAlert(){
+  //   alert("Saved Sucessfully")
+  // }
+</script>
