@@ -7,7 +7,7 @@ from .forms import HealthDataForm
 from .models import HealthData
 
 def homepage(request):
-    healthData = HealthData.objects.all()
+    healthDatas = HealthData.objects.all()
     form = HealthDataForm()
     status = 0
     if request.method == 'POST':
@@ -22,6 +22,16 @@ def homepage(request):
                   template_name='main/home.html',
                   context = {
                     'form':form,
-                    'healthData':healthData,
+                    'healthDatas':healthDatas,
                     'status': status
                   })
+# ===============================================================================================
+
+def detailpage(request):
+    healthDatas = HealthData.objects.all()
+    return render(request = request,
+                  template_name='main/detail.html',
+                  context = {
+                    'healthDatas':healthDatas,
+                  })
+

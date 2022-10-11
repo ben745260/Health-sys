@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html height="100%">
+  <head>
+    <title>Import Data</title>
+  </head>
+  {% include 'main/navbar.html' %}
+  <body>
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    Number
+                </th>
+                <th>
+                    Date
+                </th>
+                <th>
+                    Temperature
+                </th>
+                <th>
+                    Health Beat
+                </th>
+                <th>
+                    Blood Pressure
+                </th>
+                <th>
+                    Remark
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for healthData in healthDatas reversed %}
+            <tr>
+                <td>
+                    {{forloop.counter}}
+                </td>
+                <td>
+                    {{healthData.saveDate}}
+                </td>
+                <td>
+                    {{healthData.data_temperature}}
+                </td>
+                <td>
+                    {{healthData.data_heartBeat}}
+                </td>
+                <td>
+                    {{healthData.data_bloodPressure}}
+                </td>
+                <td>
+                    {{healthData.remark}}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+  </body>
+</html>
+
