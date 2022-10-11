@@ -1,0 +1,20 @@
+ <!-- <body height="100%">
+    <h3>Table 1:</h3>
+    <input id="txtField1" type="text" /><br />
+    <iframe
+      width="450"
+      height="260"
+      style="border: 1px solid #cccccc"
+      src="https://thingspeak.com/channels/1866132/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15"
+    ></iframe>
+    <h3>Table 2:</h3>
+    <input id="txtField2" type="text" /><br />
+    <iframe
+      width="450"
+      height="260"
+      style="border: 1px solid #cccccc"
+      src="https://thingspeak.com/channels/1866132/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15"
+    ></iframe
+    ><br/>
+    <input id="sum" type="text" /><br />
+  </body> -->

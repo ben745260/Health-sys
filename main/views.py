@@ -27,11 +27,24 @@ def homepage(request):
                   })
 # ===============================================================================================
 
-def detailpage(request):
+def datapage(request):
     healthDatas = HealthData.objects.all()
     return render(request = request,
-                  template_name='main/detail.html',
+                  template_name='main/data.html',
                   context = {
                     'healthDatas':healthDatas,
                   })
+
+
+# ===============================================================================================
+
+def testpage(request):
+    healthDatas = HealthData.objects.all()
+    return render(request = request,
+                  template_name='main/test.html',
+                  context = {
+                    'healthDatas':healthDatas,
+                  })
+
+
 

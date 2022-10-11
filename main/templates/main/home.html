@@ -1,72 +1,69 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Import Data</title>
+    {% load static %}
   </head>
   {% include 'includes/base.html' %}
-  <!-- <body height="100%">
-    <h3>Table 1:</h3>
-    <input id="txtField1" type="text" /><br />
-    <iframe
-      width="450"
-      height="260"
-      style="border: 1px solid #cccccc"
-      src="https://thingspeak.com/channels/1866132/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15"
-    ></iframe>
-    <h3>Table 2:</h3>
-    <input id="txtField2" type="text" /><br />
-    <iframe
-      width="450"
-      height="260"
-      style="border: 1px solid #cccccc"
-      src="https://thingspeak.com/channels/1866132/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15"
-    ></iframe
-    ><br/>
-    <input id="sum" type="text" /><br />
-  </body> -->
-  <body height="100%">
+  <body>
     <!-- {{healthDatas}} -->
-    <form action="" method="POST">
-      {% csrf_token %}
-        <table>
-          <tr>
-            <th>
-              {{form.data_temperature.label}}
-            </th>
-            <td>
-              {{form.data_temperature}}
-            </td>
-          </tr>
-          <tr>
-            <th>
-              {{form.data_heartBeat.label}}
-            </th>
-            <td>
-              {{form.data_heartBeat}}
-            </td>
-          </tr>
-          <tr>
-            <th>
-              {{form.data_bloodPressure.label}}
-            </th>
-            <td>
-              {{form.data_bloodPressure}}
-            </td>
-          </tr>
-          <tr>
-            <th>
-              {{form.remark.label}}
-            </th>
-            <td>
-              {{form.remark}}
-            </td>
-          </tr>
-        </table>
-        <div class="form-group col-md-2">
-            <input class="btn btn-success" style="margin-top: 30px;" type="submit" value="SAVE" onclick="saveAlert()"/>
-        </div>
+    <section class="section mt-3">
+      <div class="card" style="margin-right:20px; margin-left:20px; margin-bottom:5px;">
+          <div class="card-header" style="height:50px">
+              <div class="row m-0 align-items-center">
+                  <div class="col-10 col-md-10">
+                      <h4>Import Newest Health Data</h4>
+                  </div>
+              </div>
+          </div>
+
+          <div class="card-body" style="height:420px">
+            <form action="" method="POST">
+              {% csrf_token %}
+                <table>
+                  <tr>
+                    <th>
+                      {{form.data_temperature.label}}
+                    </th>
+                    <td>
+                      {{form.data_temperature}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>
+                      {{form.data_heartBeat.label}}
+                    </th>
+                    <td>
+                      {{form.data_heartBeat}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>
+                      {{form.data_bloodPressure.label}}
+                    </th>
+                    <td>
+                      {{form.data_bloodPressure}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>
+                      {{form.remark.label}}
+                    </th>
+                    <td>
+                      {{form.remark}}
+                    </td>
+                  </tr>
+                </table>
+                <div class="form-group col-md-2">
+                    <input class="btn btn-success" style="margin-top: 10px;" type="submit" value="SAVE" onclick="saveAlert()"/>
+                </div>
+              </div>
+            </form>
+          </div>
       </div>
-  </form>
+    </section>
   </body>
 </html>
 <script>
@@ -94,13 +91,6 @@
                 $('#id_data_temperature').val(item[ubound - 1].field1);
                 $('#id_data_heartBeat').val(item[ubound - 1].field2);
                 $('#id_data_bloodPresusure').val(item[ubound - 1].field3);
-                var my_input1 = document.getElementById('txtField1').value;
-                var my_input2 = document.getElementById('txtField2').value;
-
-                // Add them together and display
-                var sum = parseInt(my_input1) + parseInt(my_input2);
-                // int sum =item[ubound - 1].field2+item[ubound - 1].field1;
-                $('#sum').val(sum);
               }
             });
           },
