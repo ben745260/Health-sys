@@ -18,3 +18,13 @@
     ><br/>
     <input id="sum" type="text" /><br />
   </body> -->
+
+
+
+      {% for i in return_years %}
+    {% for temp in temp_monthly %} 
+    {{forloop.parentloop.counter}}
+    {{forloop.counter}}
+    <p>{{temp_monthly|return_item:forloop.counter|return_item:forloop.parentloop.counter}}</p>
+    {% endfor %}
+    {% endfor %}

@@ -1,40 +1,170 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
-    <title>Bootstrap Example</title>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Health Data</title>
   </head>
-  
-  <body class="p-3 m-0 border-0 bd-example">
+  {% include 'includes/base.html' %}
+  <body>
+    {{ temp_value_arr }}<br>
+    {{ all_date_arr }}
+    <section class="section mt-3">
+        <div class="card" style="margin-right:20px; margin-left:20px;">
+            <div class="card">
+                <div class="card-header" style="height:50px">
+                    <div class="row m-0 align-items-center">
+                        <div class="col-10 col-md-10">
+                            <h4>Health Data Trend</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <canvas id="chart-temp"></canvas>
+                </div>
+            </div>
+        </div>
 
-    <!-- Example Code -->
-    
-    <p>
-      <a class="btn btn-primary collapsed" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Toggle first element</a>
-      <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Toggle second element</button>
-      <button class="btn btn-primary collapsed" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Toggle both elements</button>
-    </p>
-    <div class="row">
-      <div class="col">
-        <div class="multi-collapse collapse" id="multiCollapseExample1" style="">
-          <div class="card card-body">
-            Some placeholder content for the first collapse component of this multi-collapse example. This panel is hidden by default but revealed when the user activates the relevant trigger.
-          </div>
+        <!-- Detail List Table -->
+        <div class="d-grid gap-2" style="margin-top:5px;margin-right:20px; margin-left:20px;">
+            <a id="bt-data-list" type="button" data-bs-toggle="collapse" class="btn btn-primary dropdown-toggle"
+                href="#data-list" style="float: right;">Detail list</a>
         </div>
-      </div>
-      <div class="col">
-        <div class="collapse multi-collapse" id="multiCollapseExample2">
-          <div class="card card-body">
-            Some placeholder content for the second collapse component of this multi-collapse example. This panel is hidden by default but revealed when the user activates the relevant trigger.
-          </div>
+        <div class="collapse" id="data-list">
+            <p style="margin: 15px;"></p>
+            <div class="card" style="margin-right:20px; margin-left:20px; margin-bottom:5px;">
+                <div class="card-body">
+                    <table id="table1" class="table table-hover table-small" style="height: 400px; width: 100%; display: block; overflow-y: scroll;">
+                        <thead>
+                            <tr>
+                                <th class="col-1" style="position:sticky; top:-1px;background-color:#FFF">
+                                    Number
+                                </th>
+                                <th class="col-3" style="position:sticky; top:-1px;background-color:#FFF">
+                                    Date
+                                </th>
+                                <th class="col-2" style="position:sticky; top:-1px;background-color:#FFF">
+                                    Temperature
+                                </th>
+                                <th class="col-3" style="position:sticky; top:-1px;background-color:#FFF">
+                                    Health Beat
+                                </th>
+                                <th class="col-3" style="position:sticky; top:-1px;background-color:#FFF">
+                                    Blood Pressure
+                                </th>
+                                <th class="col-4" style="position:sticky; top:-1px;background-color:#FFF">
+                                    Remark
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for healthData in healthDatas reversed %}
+                            <tr>
+                                <td>
+                                    {{forloop.counter}}
+                                </td>
+                                <td>
+                                    {{healthData.saveDate}}
+                                </td>
+                                <td>
+                                    {{healthData.data_temperature}}
+                                </td>
+                                <td>
+                                    {{healthData.data_heartBeat}}
+                                </td>
+                                <td>
+                                    {{healthData.data_bloodPressure}}
+                                </td>
+                                <td>
+                                    {{healthData.remark}}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    
-    <!-- End Example Code -->
+    </section>
   </body>
 </html>
+
+<script>
+    // Simple Datatable
+    let table1 = document.querySelector('#table1');
+    let dataTable1 = new simpleDatatables.DataTable(table1);
+
+    function resizeIt(textarea) {
+        textarea.style.height = "";
+        textarea.style.height = this.scrollHeight + 2 + "px";
+    }
+    $('tbody tr').on('click', function () {
+        var trs = document.querySelectorAll("tr");
+        trs.forEach(function (tr) {
+            tr.removeAttribute('style');
+        })
+        $(this).css("--bs-table-accent-bg", "rgba(0, 0, 0, 0.075)")
+        // color: var(--bs-table-hover-color);
+    });
+</script>
+<!-- 
+<script>
+    var config = {
+        type: 'line',
+        data: {
+            datasets: [{
+                data: {{ temp_value_arr }},
+                backgroundColor: '#435ebe',
+                label: 'Temperature',
+                datalabels: {color: '#f8f9fa'}
+            }],
+            // labels: {{ all_date_arr }}
+            labels: [1,2,3,4],
+        },
+        options: {
+            responsive: true,
+            plugins:{
+                title: {
+                    display: true,
+                    text: 'Temperature Trend',
+                }
+            }
+
+        },
+        plugins: [ChartDataLabels],
+    };
+
+    var ctx = document.getElementById('chart-temp').getContext('2d');
+    var tempChart = new Chart(ctx, config);
+</script> -->
+
+<script>
+    var xValues = [50,60,70,80,90,100,110,120,130,140,150];
+    var yValues = [7,8,8,9,9,9,10,11,14,14,15];
+    
+    new Chart("chart-temp", {
+      type: "line",
+      data: {
+        labels: xValues,
+        datasets: [{
+          fill: false,
+          lineTension: 0,
+          backgroundColor: "rgba(0,0,255,1.0)",
+          borderColor: "rgba(0,0,255,0.1)",
+          data: yValues
+        }]
+      },
+      options: {
+        legend: {display: false},
+        scales: {
+          yAxes: [{ticks: {min: 6, max:16}}],
+        }
+      }
+    });
+    </script>
+    
+    </body>
+    </html>
+    
+    
+    
+
+

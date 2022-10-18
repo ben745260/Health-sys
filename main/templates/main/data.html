@@ -4,67 +4,99 @@
     <title>Health Data</title>
   </head>
   {% include 'includes/base.html' %}
+  {% load getValue %}
   <body>
-    <div class="d-grid gap-2" style="margin-top:5px;margin-right:20px; margin-left:20px;">
-        <a id="bt-data-list" type="button" data-bs-toggle="collapse" class="btn btn-primary dropdown-toggle"
-            href="#data-list" style="float: right;">Detail list</a>
-    </div>
-    <div class="collapse" id="data-list">
-        <p style="margin: 15px;"></p>
-        <div class="card" style="margin-right:20px; margin-left:20px; margin-bottom:5px;">
-            <div class="card-body">
-                <table id="table1" class="table table-hover table-small" style="height: 400px; width: 100%; display: block; overflow-y: scroll;">
-                    <thead>
-                        <tr>
-                            <th class="col-1" style="position:sticky; top:-1px;background-color:#FFF">
-                                Number
-                            </th>
-                            <th class="col-3" style="position:sticky; top:-1px;background-color:#FFF">
-                                Date
-                            </th>
-                            <th class="col-2" style="position:sticky; top:-1px;background-color:#FFF">
-                                Temperature
-                            </th>
-                            <th class="col-3" style="position:sticky; top:-1px;background-color:#FFF">
-                                Health Beat
-                            </th>
-                            <th class="col-3" style="position:sticky; top:-1px;background-color:#FFF">
-                                Blood Pressure
-                            </th>
-                            <th class="col-4" style="position:sticky; top:-1px;background-color:#FFF">
-                                Remark
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for healthData in healthDatas reversed %}
-                        <tr>
-                            <td>
-                                {{forloop.counter}}
-                            </td>
-                            <td>
-                                {{healthData.saveDate}}
-                            </td>
-                            <td>
-                                {{healthData.data_temperature}}
-                            </td>
-                            <td>
-                                {{healthData.data_heartBeat}}
-                            </td>
-                            <td>
-                                {{healthData.data_bloodPressure}}
-                            </td>
-                            <td>
-                                {{healthData.remark}}
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+    <!-- {{temp_monthly}}<hr>
+    {{HB_monthly}}<hr>
+    {{BP_monthly}}<hr> -->
+    <section class="section mt-3">
+        <select class="form-select" id="selectYear" onchange="changeYearFunc(value);">
+            {% for i in return_years %}
+            <option value="{{forloop.revcounter}}">
+                {{return_years|return_item:forloop.revcounter0}}
+            </option>
+            {% endfor %}
+        </select>
+        {% for i in return_years %}
+        <div class="card" id ="chart_card_{{forloop.counter}}" style="margin-right:20px; margin-left:20px;">
+            <div class="card">
+                <div class="card-header" style="height:50px">
+                    <div class="row m-0 align-items-center">
+                        <div class="col-10 col-md-10">
+                            <h4>{{return_years|return_item:forloop.counter0}}: Health Data Trend</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <canvas id="chart-temp_{{forloop.counter}}"></canvas>
+                    <canvas id="chart-HB_{{forloop.counter}}"></canvas>
+                    <canvas id="chart-BP_{{forloop.counter}}"></canvas>
+                </div>
             </div>
         </div>
-    </div>
-    <a id="btbottom"></a>
+        {% endfor %}
+
+        <!-- Detail List Table -->
+        <div class="d-grid gap-2" style="margin-top:5px;margin-right:20px; margin-left:20px;">
+            <a id="bt-data-list" type="button" data-bs-toggle="collapse" class="btn btn-primary dropdown-toggle"
+                href="#data-list" style="float: right;">Detail list</a>
+        </div>
+        <div class="collapse" id="data-list">
+            <p style="margin: 15px;"></p>
+            <div class="card" style="margin-right:20px; margin-left:20px; margin-bottom:5px;">
+                <div class="card-body">
+                    <table id="table1" class="table table-hover table-small" style="height: 400px; width: 100%; display: block; overflow-y: scroll;">
+                        <thead>
+                            <tr>
+                                <th class="col-1" style="position:sticky; top:-1px;background-color:#FFF">
+                                    Number
+                                </th>
+                                <th class="col-3" style="position:sticky; top:-1px;background-color:#FFF">
+                                    Date
+                                </th>
+                                <th class="col-2" style="position:sticky; top:-1px;background-color:#FFF">
+                                    Temperature
+                                </th>
+                                <th class="col-3" style="position:sticky; top:-1px;background-color:#FFF">
+                                    Health Beat
+                                </th>
+                                <th class="col-3" style="position:sticky; top:-1px;background-color:#FFF">
+                                    Blood Pressure
+                                </th>
+                                <th class="col-4" style="position:sticky; top:-1px;background-color:#FFF">
+                                    Remark
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for healthData in healthDatas|dictsortreversed:"saveDate" %}
+                            <tr>
+                                <td>
+                                    {{forloop.counter}}
+                                </td>
+                                <td>
+                                    {{healthData.saveDate}}
+                                </td>
+                                <td>
+                                    {{healthData.data_temperature}}
+                                </td>
+                                <td>
+                                    {{healthData.data_heartBeat}}
+                                </td>
+                                <td>
+                                    {{healthData.data_bloodPressure}}
+                                </td>
+                                <td>
+                                    {{healthData.remark}}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
   </body>
 </html>
 
@@ -86,4 +118,143 @@
         // color: var(--bs-table-hover-color);
     });
 </script>
+
+<script>
+    {% for i in return_years %}
+    var ctx = document.getElementById('chart-temp_{{forloop.counter}}');
+    var data = [{% for temp in '1111111111111' %} {{temp_monthly|return_item:forloop.parentloop.counter0|return_item:forloop.counter0}}, {% endfor %} ];
+    var labels =[{% for label in month_labels %} '{{label}}', {% endfor %}];
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Month',
+                borderColor: '#435ebe',
+                fill: false,
+                data: data,
+                datalabels: {
+                    borderWidth: 0.5,
+                    borderRadius: 3,
+                    color: '#f8f9fa',
+                    backgroundColor: '#435ebe',
+                    align: 'top',
+                    anchor: 'start',
+                    font: {
+                        weight: 'bold',
+                    }
+                }
+            }],
+        },
+        options: {
+            responsive: true,
+            plugins:{
+                title: {
+                    display: true,
+                    text: '{{return_years|return_item:forloop.counter0}}: Temperature Trend',
+                    font:{size:17},
+                }
+            }
+        },
+        plugins: [ChartDataLabels],
+    });
+    {% endfor %}
+    // ========================================================================
+    {% for i in return_years %}
+    var ctx = document.getElementById('chart-HB_{{forloop.counter}}');
+    var data = [{% for temp in '1111111111111' %} {{HB_monthly|return_item:forloop.parentloop.counter0|return_item:forloop.counter0}}, {% endfor %} ];
+    var labels =[{% for label in month_labels %} '{{label}}', {% endfor %}];
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Month',
+                borderColor: '#435ebe',
+                fill: false,
+                data: data,
+                datalabels: {
+                    borderWidth: 0.5,
+                    borderRadius: 3,
+                    color: '#f8f9fa',
+                    backgroundColor: '#435ebe',
+                    align: 'top',
+                    anchor: 'start',
+                    font: {
+                        weight: 'bold',
+                    }
+                }
+            }],
+        },
+        options: {
+            responsive: true,
+            plugins:{
+                title: {
+                    display: true,
+                    text: '{{return_years|return_item:forloop.counter0}}: Heart Beat Trend',
+                    font:{size:17},
+                }
+            }
+        },
+        plugins: [ChartDataLabels],
+    });
+    {% endfor %}
+    // ========================================================================
+    {% for i in return_years %}
+    var ctx = document.getElementById('chart-BP_{{forloop.counter}}');
+    var data = [{% for temp in '1111111111111' %} {{BP_monthly|return_item:forloop.parentloop.counter0|return_item:forloop.counter0}}, {% endfor %} ];
+    var labels =[{% for label in month_labels %} '{{label}}', {% endfor %}];
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Month',
+                borderColor: '#435ebe',
+                fill: false,
+                data: data,
+                datalabels: {
+                    borderWidth: 0.5,
+                    borderRadius: 3,
+                    color: '#f8f9fa',
+                    backgroundColor: '#435ebe',
+                    align: 'top',
+                    anchor: 'start',
+                    font: {
+                        weight: 'bold',
+                    }
+                }
+            }],
+        },
+        options: {
+            responsive: true,
+            plugins:{
+                title: {
+                    display: true,
+                    text: '{{return_years|return_item:forloop.counter0}}: Blood Pressure Trend',
+                    font:{size:17},
+                }
+            }
+        },
+        plugins: [ChartDataLabels],
+    });
+    {% endfor %}
+</script>
+
+<script>
+    $("#chart_card_1").hide();
+    function changeYearFunc(z) {
+            {% for i in return_years %}
+            if(z=={{forloop.counter}}){
+                var currentYear = document.getElementById( "selectType" ).value;
+                $("#chart_card_"+currentYear).hide();
+                $("#chart_card_{{forloop.counter}}").show();
+            }
+            {% endfor %}
+            
+        }
+
+
+</script>
+
 

@@ -14,4 +14,4 @@ class HealthData(models.Model):
     saveDate = models.DateTimeField("date punished",default=datetime.now().strftime("%Y-%m-%d %H:%M:%S") )
     
     def __str__(self):
-        return f"{self.id}: {self.saveDate} Remark:{self.remark}"
+        return f"{self.id}: {self.saveDate} Remark:{self.remark} | {self.data_temperature}, {self.data_heartBeat}, {self.data_bloodPressure}"
