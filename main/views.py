@@ -33,58 +33,38 @@ def homepage(request):
 
 def datapage(request):
   healthDatas = HealthData.objects.all()
-  temp_value_arr = []
-  all_date_arr = []
-  all_date_arr1 = []
-  years = int(dt.now().date().year)-2020
-  # Array[year][month]
-  numCounter = [[0]*(13) for i in range(years)]
-  temp_monthly = [[0]*(13) for i in range(years)]
-  HB_monthly = [[0]*(13) for i in range(years)]
-  BP_monthly = [[0]*(13) for i in range(years)]
-  month_labels = ['Jan','Feb','Mar','Apr','May','June','July','Aug','Sep','Oct','Nov','Dec']
+  # Array[][0]= value, Array[][1]= day, Array[][2]= month, Array[][3]= year
+  temp_perTime = [[0]*(4) for i in range(int(HealthData.objects.latest('id').id)+1)]
+  HB_perTime = [[0]*(4) for i in range(int(HealthData.objects.latest('id').id)+1)]
+  BP_perTime = [[0]*(4) for i in range(int(HealthData.objects.latest('id').id)+1)]
 
-  for healthData in healthDatas:
-    temp_value_arr.append(float(healthData.data_temperature))
-    all_date_arr1.append(healthData.saveDate.month)
+  ImportDatas = HealthData.objects.order_by('saveDate')
 
-    all_date_arr = np.array(all_date_arr1, dtype = dt)
-
-  # calulate aveage healthData monthly and yearly
-  for healthData in healthDatas:
-    arr_year = int(healthData.saveDate.year) - 2021
-    arr_month = int(healthData.saveDate.month)
-    numCounter[arr_year][arr_month] += 1
-    temp_monthly[arr_year][arr_month] += float(healthData.data_temperature)
-    HB_monthly[arr_year][arr_month] += float(healthData.data_heartBeat)
-    BP_monthly[arr_year][arr_month] += float(healthData.data_bloodPressure)
-
-  # Get Average
-  for year in range(years):
-    for month in range(13):
-      if numCounter[year][month] != 0:
-        temp_monthly[year][month] = round(temp_monthly[year][month]/numCounter[year][month],2)
-        HB_monthly[year][month] = round(HB_monthly[year][month]/numCounter[year][month],2)
-        BP_monthly[year][month] = round(BP_monthly[year][month]/numCounter[year][month],2)
-
-  return_years = []
-  temp=1
-  for i in range(years):
-      return_years.append(2020+temp)
-      temp +=1
+  for data in ImportDatas:
+    dataID = data.id
+    temp_perTime[dataID][0] = float(data.data_temperature)
+    temp_perTime[dataID][1] = int(data.saveDate.day)
+    temp_perTime[dataID][2] = int(data.saveDate.month)
+    temp_perTime[dataID][3] = int(data.saveDate.year)
+    # =======================
+    HB_perTime[dataID][0] = float(data.data_heartBeat)
+    HB_perTime[dataID][1] = int(data.saveDate.day)
+    HB_perTime[dataID][2] = int(data.saveDate.month)
+    HB_perTime[dataID][3] = int(data.saveDate.year)
+    # =======================
+    BP_perTime[dataID][0] = float(data.data_bloodPressure)
+    BP_perTime[dataID][1] = int(data.saveDate.day)
+    BP_perTime[dataID][2] = int(data.saveDate.month)
+    BP_perTime[dataID][3] = int(data.saveDate.year)
 
   return render(request = request,
                 template_name='main/data.html',
                 context = {
                   'healthDatas': healthDatas,
-                  'temp_value_arr': temp_value_arr,
-                  'all_date_arr': all_date_arr,
-                  'temp_monthly' : temp_monthly,
-                  'HB_monthly' : HB_monthly,
-                  'BP_monthly' : BP_monthly,
-                  'numCounter' : numCounter,
-                  'month_labels' : month_labels,
-                  'return_years' : return_years,
+                  'ImportDatas' : ImportDatas,
+                  'temp_perTime' : temp_perTime,
+                  'HB_perTime' : HB_perTime,
+                  'BP_perTime' : BP_perTime,
                 })
 
 
