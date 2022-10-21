@@ -6,47 +6,35 @@
   {% include 'includes/base.html' %}
   {% load getValue %}
   <body>
-    <!-- {{temp_monthly}}<hr>
-    {{HB_monthly}}<hr>
-    {{BP_monthly}}<hr> -->
-    <!-- {{ImportData}} -->
-    <!-- {{temp_perTime}}<hr>
-    {{HB_perTime}}<hr>
-    {{BP_perTime}}<hr> -->
     <section class="section mt-3">
-        <!-- <select class="form-select" id="selectYear" onchange="changeYearFunc(value);">
-            {% for i in return_years %}
-            <option value="{{forloop.revcounter}}">
-                {{return_years|return_item:forloop.revcounter0}}
-            </option>
-            {% endfor %}
-        </select> -->
-        <div class="card" style="margin-right:20px; margin-left:20px; border-color: black;">
-            <div class="card">
-                <div class="card-body">
-                    <div style="width: 60%;height: 60%; margin-left: 20%;">
-                        <canvas id="chart-temp"></canvas>
+        <div class="card" style="margin-right:20px; margin-left:20px; border-color: black; background-color:#c8c8fa;">
+            <div class="card-body">
+                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div style="width: 60%;height: 60%; margin-left: 20%; background-color:white; border-radius: 5px;">
+                            <canvas id="chart-temp"></canvas>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <p></p>
-        <div class="card" style="margin-right:20px; margin-left:20px; border-color: black;">
-            <div class="card">
-                <div class="card-body">
-                    <div style="width: 60%;height: 60%; margin-left: 20%;">
-                        <canvas id="chart-HB"></canvas>
+                    <div class="carousel-item">
+                        <div style="width: 60%;height: 60%; margin-left: 20%; background-color:white; border-radius: 5px;">
+                            <canvas id="chart-HB"></canvas>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <p></p>
-        <div class="card" style="margin-right:20px; margin-left:20px; border-color: black;">
-            <div class="card">
-                <div class="card-body">
-                    <div style="width: 60%;height: 60%; margin-left: 20%;">
-                        <canvas id="chart-BP"></canvas>
+                    <div class="carousel-item">
+                        <div style="width: 60%;height: 60%; margin-left: 20%; background-color:white; border-radius: 5px;">
+                            <canvas id="chart-BP"></canvas>
+                        </div>
                     </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                    </button>
                 </div>
             </div>
         </div>
