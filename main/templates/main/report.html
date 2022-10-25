@@ -26,10 +26,10 @@
                     <tr>
                         <td>{{newestData.data_temperature}}</td>
                         <td>{{newestData.data_heartBeat}}</td>
-                        <td>{{newestData.data_bloodPressure}}</td>
+                        <td>{{newestData.data_bloodPressure_sys}}/{{newestData.data_bloodPressure_dia}}</td>
                     </tr>
                 </table>
-                {{temp_message}}{{HB_message}}
+                {{temp_message}}/{{HB_message}}/{{BP_message}}
             </div>
         </div>
       </section>

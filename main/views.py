@@ -98,12 +98,21 @@ def reportpage(request):
     # =======================
     if HB < 60 :
       HB_message = "Bradycardia"
-    elif temp >=60 and temp <=100:
+    elif HB >=60 and HB <=100:
       HB_message = "Normal"
-    elif temp >100:
+    elif HB >100:
       HB_message = "Tachycardia"
     else:
       HB_message = "error"
+    # =======================
+    if BP_sys < 120 and BP_dia <80 :
+      BP_message = "Normal"
+    elif (BP_sys >=120 and BP_sys <140) and (BP_dia >= 80 and BP_dia < 90):
+      BP_message = "At Risk (Prehypertension)"
+    elif BP_sys >= 140 and BP_dia >=90:
+      BP_message = "High Blood Pressure (Hypertension)"
+    else:
+      BP_message = "error"
     
 
     
@@ -114,6 +123,7 @@ def reportpage(request):
                     'newestData' : newestData,
                     'temp_message' : temp_message,
                     'HB_message' : HB_message,
+                    'BP_message' : BP_message,
                   })
 
 # ===============================================================================================
