@@ -8,13 +8,19 @@
   </head>
   {% include 'includes/base.html' %}
   <body>
-    <!-- {{healthDatas}} -->
+    {{saved}}
     <section class="section mt-3">
       <div class="card" style="margin-right:20px; margin-left:20px; margin-bottom:5px; border-color: black;">
           <div class="card-header" style="height:50px">
               <div class="row m-0 align-items-center">
                   <div class="col-10 col-md-10">
-                      <h4>Import Newest Health Data</h4>
+                      <h4>Import Health Data 
+                        {% if messages %}
+                        {% for message in messages %}
+                         ({{ message }})
+                        {% endfor %}
+                        {% endif %}
+                      </h4>
                   </div>
               </div>
           </div>
@@ -25,7 +31,7 @@
                 <table>
                   <tr>
                     <th>
-                      {{form.data_temperature.label}}
+                      {{form.data_temperature.label}}(˚C)
                     </th>
                     <td>
                       {{form.data_temperature}}
@@ -33,7 +39,7 @@
                   </tr>
                   <tr>
                     <th>
-                      {{form.data_heartBeat.label}}
+                      {{form.data_heartBeat.label}}(bpm)
                     </th>
                     <td>
                       {{form.data_heartBeat}}
@@ -41,10 +47,10 @@
                   </tr>
                   <tr>
                     <th>
-                      {{form.data_bloodPressure.label}}
+                      {{form.data_bloodPressure_sys.label}}(mmHg)
                     </th>
                     <td>
-                      {{form.data_bloodPressure}}
+                      {{form.data_bloodPressure_sys}}/{{form.data_bloodPressure_dia}}
                     </td>
                   </tr>
                   <tr>
@@ -68,7 +74,9 @@
 </html>
 <script>
   // function saveAlert(){
-  //   alert("Saved Sucessfully")
+  //   if($('#id_data_temperature').value >= 0 && $('#id_data_heartBeat').value >= 0 && $('#id_data_bloodPressure').value >= 0){
+  //   alert("Saved Successfully")
+  //   }
   // }
 
   $(document).ready(function () {
@@ -77,7 +85,9 @@
 
       function GetData() {
         var url =
-          'https://api.thingspeak.com/channels/1866132/feeds.json?api_key=5GGKW35T2PBTAOZP&results=2';
+          'https://api.thingspeak.com/channels/1897432/feeds.json?api_key=YEIG305U41JZMZ0O&results=2';
+        // project
+
         $.ajax({
           url: url,
           type: 'GET',
@@ -90,7 +100,8 @@
                 var ubound = item.length;
                 $('#id_data_temperature').val(item[ubound - 1].field1);
                 $('#id_data_heartBeat').val(item[ubound - 1].field2);
-                $('#id_data_bloodPresusure').val(item[ubound - 1].field3);
+                $('#id_data_bloodPressure_sys').val(item[ubound - 1].field3);
+                $('#id_data_bloodPressure_dia').val(item[ubound - 1].field4);
               }
             });
           },

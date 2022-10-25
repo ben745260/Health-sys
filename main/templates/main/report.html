@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Health Report</title>
+  </head>
+  {% include 'includes/base.html' %}
+  <body>
+    <section class="section mt-3">
+        <div class="card" style="margin-right:20px; margin-left:20px; margin-bottom:5px; border-color: black;">
+            <div class="card-header" style="height:50px">
+                <div class="row m-0 align-items-center">
+                    <div class="col-10 col-md-10">
+                        <h4>Health Report</h4>
+                    </div>
+                </div>
+            </div>
+  
+            <div class="card-body" style="height:420px">
+                <h6>You newest Health Data is...</h6>
+                <table class="table table-hover table-small">
+                    <tr>
+                        <th>Temperature (˚C)</th>
+                        <th>Heartbeat (bpm)</th>
+                        <th>Blood Pressure (mmHg)</th>
+                    </tr>
+                    <tr>
+                        <td>{{newestData.data_temperature}}</td>
+                        <td>{{newestData.data_heartBeat}}</td>
+                        <td>{{newestData.data_bloodPressure}}</td>
+                    </tr>
+                </table>
+                {{temp_message}}{{HB_message}}
+            </div>
+        </div>
+      </section>
+  </body>
+</html>
+
+    
+    
+    
+
+
