@@ -4,6 +4,8 @@
     <title>Health Report</title>
   </head>
   {% include 'includes/base.html' %}
+  {% load getValue %}
+
   <body>
     <section class="section mt-3">
         <div class="card" style="margin-right:20px; margin-left:20px; margin-bottom:5px; border-color: black;">
@@ -15,7 +17,7 @@
                 </div>
             </div>
   
-            <div class="card-body" style="height:420px">
+            <div class="card-body">
                 <h6>You newest Health Data is...</h6>
                 <table class="table table-hover table-small">
                     <tr>
@@ -30,6 +32,45 @@
                     </tr>
                 </table>
                 {{temp_message}}/{{HB_message}}/{{BP_message}}
+                <div class="d-grid gap-2" style="margin-top:5px">
+                    <a id="bt-temp-advice" type="button" data-bs-toggle="collapse" class="btn btn-secondary dropdown-toggle"
+                        href="#temp-advice" style="float: left; margin-bottom:5px;">Your temperature is: {{temp_message}}</a>
+                </div>
+                <div class="collapse" id="temp-advice">
+                    <div class="card" style="margin-bottom:5px; border-color: black;">
+                        <div class="card-body">
+                            {% for i in temp_advice %}
+                            {{temp_advice|return_item:forloop.counter0}}<br>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="d-grid gap-2" style="margin-top:5px">
+                    <a id="bt-HB-advice" type="button" data-bs-toggle="collapse" class="btn btn-secondary dropdown-toggle"
+                        href="#HB-advice" style="float: left; margin-bottom:5px;">Your Heartbeat is: {{HB_message}}</a>
+                </div>
+                <div class="collapse" id="HB-advice">
+                    <div class="card" style="margin-bottom:5px; border-color: black;">
+                        <div class="card-body">
+                            {% for i in HB_advice %}
+                            {{HB_advice|return_item:forloop.counter0}}<br>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="d-grid gap-2" style="margin-top:5px">
+                    <a id="bt-BP-advice" type="button" data-bs-toggle="collapse" class="btn btn-secondary dropdown-toggle"
+                        href="#BP-advice" style="float: left; margin-bottom:5px;">Your Blood Pressure is: {{BP_message}}</a>
+                </div>
+                <div class="collapse" id="BP-advice">
+                    <div class="card" style="margin-bottom:5px; border-color: black;">
+                        <div class="card-body">
+                            {% for i in BP_advice %}
+                            {{BP_advice|return_item:forloop.counter0}}<br>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
       </section>

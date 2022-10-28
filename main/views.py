@@ -83,34 +83,79 @@ def reportpage(request):
     HB = newestData.data_heartBeat
     BP_sys = newestData.data_bloodPressure_sys
     BP_dia = newestData.data_bloodPressure_dia
+    temp_advice = []
+    HB_advice = []
+    BP_advice = []
 
     # =======================
     if temp <= 35.0:
       temp_message = "Hypothermia"
+      temp_advice.append("Your temperature are below normal")
+      temp_advice.append("Your can...")
+      temp_advice.append("1. Remove and replace any wet clothing and make sure their head is covered.")
+      temp_advice.append("2. Try to protect the casualty from the ground.")
+      temp_advice.append("3. If the casualty is fully alert, offer them warm drinks and high energy food such as chocolate.")
+      temp_advice.append("4. Monitor their breathing, level of response and temperature while waiting for help to arrive.")
+
     elif temp >35 and temp <=37.5:
       temp_message = "Normal"
-    elif temp >37.5 and temp <=40:
+      temp_advice.append("Your temperature are Normal")
+      temp_advice.append("Keep going!")
+    elif temp >37.5:
       temp_message = "Fever"
-    elif temp >35 and temp <=37.5:
-      temp_message = "Hyperpyrexia"
+      temp_advice.append("Your temperature are above normal")
+      temp_advice.append("Your can...")
+      temp_advice.append("1. Get lots of rest.")
+      temp_advice.append("2. Drink plenty of fluids (water is best) to avoid dehydration – drink enough so your pee is light yellow and clear.")
+      temp_advice.append("3. Take paracetamol or ibuprofen if you feel uncomfortable.")
+      temp_advice.append("4. Stay at home and avoid contact with other people until you do not have a high temperature.")
     else:
       temp_message = "error"
     # =======================
     if HB < 60 :
       HB_message = "Bradycardia"
+      HB_advice.append("Your heartbeat below normal")
+      HB_advice.append("You can...")
+      HB_advice.append("1. Eat a heart-healthy diet that includes vegetables, fruits, nuts, beans, lean meat, fish, and whole grains. Limit alcohol, sodium, and sugar.")
+      HB_advice.append("2. Stay at a healthy weight. Lose weight if you need to.")
+      HB_advice.append("3. Do not smoke.")
+      HB_advice.append("4. Manage other health problems such as high cholesterol, and diabetes.")
+
     elif HB >=60 and HB <=100:
       HB_message = "Normal"
+      HB_advice.append("Your heartbeat are Normal")
+      HB_advice.append("Keep going!")
     elif HB >100:
       HB_message = "Tachycardia"
+      HB_advice.append("Your heartbeat above normal")
+      HB_advice.append("You can...")
+      HB_advice.append("1. Cutting down on the amount of caffeine or alcohol you drink.")
+      HB_advice.append("2. Stopping or cutting back on smoking.")
+      HB_advice.append("3. Making sure you get enough rest.")
     else:
       HB_message = "error"
     # =======================
     if BP_sys < 120 and BP_dia <80 :
       BP_message = "Normal"
+      BP_advice.append("Your blood pressure are Normal")
+      BP_advice.append("Keep going!")
     elif (BP_sys >=120 and BP_sys <140) and (BP_dia >= 80 and BP_dia < 90):
-      BP_message = "At Risk (Prehypertension)"
+      BP_message = "Prehypertension"
+      BP_advice.append("Your blood pressure are at risk")
+      BP_advice.append("You can...")
+      BP_advice.append("1. Lose weight if you are overweight.")
+      BP_advice.append("2. Exercise regularly.")
+      BP_advice.append("3. Eat plenty of fruits, vegetables, whole grains, fish, and low-fat dairy.")
+      BP_advice.append("4. Cut back on dietary salt/sodium.")
+
     elif BP_sys >= 140 and BP_dia >=90:
-      BP_message = "High Blood Pressure (Hypertension)"
+      BP_message = "Hypertension"
+      BP_advice.append("Your blood pressure are high")
+      BP_advice.append("You can...")
+      BP_advice.append("1. Lose weight if you are overweight.")
+      BP_advice.append("2. Exercise regularly.")
+      BP_advice.append("3. Eat plenty of fruits, vegetables, whole grains, fish, and low-fat dairy.")
+      BP_advice.append("4. Cut back on dietary salt/sodium.")
     else:
       BP_message = "error"
     
@@ -124,6 +169,9 @@ def reportpage(request):
                     'temp_message' : temp_message,
                     'HB_message' : HB_message,
                     'BP_message' : BP_message,
+                    'temp_advice' : temp_advice,
+                    'HB_advice' : HB_advice,
+                    'BP_advice' : BP_advice,
                   })
 
 # ===============================================================================================
