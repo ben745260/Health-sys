@@ -40,7 +40,11 @@
                     <div class="card" style="margin-bottom:5px; border-color: black;">
                         <div class="card-body">
                             {% for i in temp_advice %}
+                            {% if forloop.first %}
+                            <h5>{{temp_advice|return_item:0}}</h5>
+                            {% else %}
                             {{temp_advice|return_item:forloop.counter0}}<br>
+                            {% endif %}
                             {% endfor %}
                         </div>
                     </div>
@@ -53,7 +57,11 @@
                     <div class="card" style="margin-bottom:5px; border-color: black;">
                         <div class="card-body">
                             {% for i in HB_advice %}
+                            {% if forloop.first %}
+                            <h5>{{HB_advice|return_item:0}}</h5>
+                            {% else %}
                             {{HB_advice|return_item:forloop.counter0}}<br>
+                            {% endif %}
                             {% endfor %}
                         </div>
                     </div>
@@ -66,7 +74,11 @@
                     <div class="card" style="margin-bottom:5px; border-color: black;">
                         <div class="card-body">
                             {% for i in BP_advice %}
+                            {% if forloop.first %}
+                            <h5>{{BP_advice|return_item:0}}</h5>
+                            {% else %}
                             {{BP_advice|return_item:forloop.counter0}}<br>
+                            {% endif %}
                             {% endfor %}
                         </div>
                     </div>
@@ -76,9 +88,3 @@
       </section>
   </body>
 </html>
-
-    
-    
-    
-
-
