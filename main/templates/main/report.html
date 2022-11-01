@@ -24,14 +24,15 @@
                         <th>Temperature (˚C)</th>
                         <th>Heartbeat (bpm)</th>
                         <th>Blood Pressure (mmHg)</th>
+                        <th>Blood Oxygen (mmhg)</th>
                     </tr>
                     <tr>
                         <td>{{newestData.data_temperature}}</td>
                         <td>{{newestData.data_heartBeat}}</td>
                         <td>{{newestData.data_bloodPressure_sys}}/{{newestData.data_bloodPressure_dia}}</td>
+                        <td>{{newestData.data_spo2}}</td>
                     </tr>
                 </table>
-                {{temp_message}}/{{HB_message}}/{{BP_message}}
                 <div class="d-grid gap-2" style="margin-top:5px">
                     <a id="bt-temp-advice" type="button" data-bs-toggle="collapse" class="btn btn-secondary dropdown-toggle"
                         href="#temp-advice" style="float: left; margin-bottom:5px;">Your temperature is: {{temp_message}}</a>
@@ -78,6 +79,23 @@
                             <h5>{{BP_advice|return_item:0}}</h5>
                             {% else %}
                             {{BP_advice|return_item:forloop.counter0}}<br>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="d-grid gap-2" style="margin-top:5px">
+                    <a id="bt-Spo2-advice" type="button" data-bs-toggle="collapse" class="btn btn-secondary dropdown-toggle"
+                        href="#Spo2-advice" style="float: left; margin-bottom:5px;">Your Blood Oxygen is: {{Spo2_message}}</a>
+                </div>
+                <div class="collapse" id="Spo2-advice">
+                    <div class="card" style="margin-bottom:5px; border-color: black;">
+                        <div class="card-body">
+                            {% for i in Spo2_advice %}
+                            {% if forloop.first %}
+                            <h5>{{Spo2_advice|return_item:0}}</h5>
+                            {% else %}
+                            {{Spo2_advice|return_item:forloop.counter0}}<br>
                             {% endif %}
                             {% endfor %}
                         </div>

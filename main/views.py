@@ -37,6 +37,7 @@ def datapage(request):
   HB_perTime = [[0]*(4) for i in range(int(HealthData.objects.latest('id').id)+1)]
   BP_sys_perTime = [[0]*(4) for i in range(int(HealthData.objects.latest('id').id)+1)]
   BP_dia_perTime = [[0]*(4) for i in range(int(HealthData.objects.latest('id').id)+1)]
+  Spo2_perTime = [[0]*(4) for i in range(int(HealthData.objects.latest('id').id)+1)]
 
 
   ImportDatas = HealthData.objects.order_by('saveDate')
@@ -62,6 +63,11 @@ def datapage(request):
     BP_dia_perTime[dataID][1] = int(data.saveDate.day)
     BP_dia_perTime[dataID][2] = int(data.saveDate.month)
     BP_dia_perTime[dataID][3] = int(data.saveDate.year)
+    # =======================
+    Spo2_perTime[dataID][0] = float(data.data_spo2)
+    Spo2_perTime[dataID][1] = int(data.saveDate.day)
+    Spo2_perTime[dataID][2] = int(data.saveDate.month)
+    Spo2_perTime[dataID][3] = int(data.saveDate.year)
 
 
   return render(request = request,
@@ -73,6 +79,7 @@ def datapage(request):
                   'HB_perTime' : HB_perTime,
                   'BP_sys_perTime' : BP_sys_perTime,
                   'BP_dia_perTime' : BP_dia_perTime,
+                  'Spo2_perTime' : Spo2_perTime,
                 })
 # ===============================================================================================
 
@@ -83,9 +90,11 @@ def reportpage(request):
     HB = newestData.data_heartBeat
     BP_sys = newestData.data_bloodPressure_sys
     BP_dia = newestData.data_bloodPressure_dia
+    Spo2 = newestData.data_spo2
     temp_advice = []
     HB_advice = []
     BP_advice = []
+    Spo2_advice = []
 
     # =======================
     if temp <= 35.0:
@@ -158,8 +167,27 @@ def reportpage(request):
       BP_advice.append("4. Cut back on dietary salt/sodium.")
     else:
       BP_message = "error"
-    
-
+    # =======================
+    if Spo2 < 80 :
+      Spo2_message = "Hypoxemia"
+      Spo2_advice.append("Your heartbeat below normal level.")
+      Spo2_advice.append("You can...")
+      Spo2_advice.append("1. Inhalers with bronchodilators or steroids to help people with lung disease like COPD.")
+      Spo2_advice.append("2. Medications that help to get rid of excess fluid in your lungs.")
+      Spo2_advice.append("3.  Continuous positive airways pressure mask (CPAP) to treat sleep apnea.")
+    elif Spo2 >=80 and Spo2 <=100:
+      Spo2_message = "Normal Level"
+      Spo2_advice.append("Your heartbeat are Normal.")
+      Spo2_advice.append("Keep going!")
+    elif Spo2 >100:
+      Spo2_message = "High Level"
+      Spo2_advice.append("Your heartbeat above normal level.")
+      Spo2_advice.append("You can...")
+      Spo2_advice.append("1. Lie down in the prone position")
+      Spo2_advice.append("2. Include more antioxidants in your diet.")
+      Spo2_advice.append("3. Practice slow and deep breathing.")
+    else:
+      Spo2_message = "error"
     
     return render(request = request,
                   template_name='main/report.html',
@@ -169,9 +197,11 @@ def reportpage(request):
                     'temp_message' : temp_message,
                     'HB_message' : HB_message,
                     'BP_message' : BP_message,
+                    'Spo2_message' : Spo2_message,
                     'temp_advice' : temp_advice,
                     'HB_advice' : HB_advice,
                     'BP_advice' : BP_advice,
+                    'Spo2_advice' : Spo2_advice,
                   })
 
 # ===============================================================================================

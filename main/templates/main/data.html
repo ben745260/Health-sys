@@ -31,6 +31,11 @@
                             <canvas id="chart-BP-dia"></canvas>
                         </div>
                     </div>
+                    <div class="carousel-item">
+                        <div style="width: 60%;height: 60%; margin-left: 20%; background-color:white; border-radius: 5px;">
+                            <canvas id="chart-Spo2"></canvas>
+                        </div>
+                    </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -55,17 +60,20 @@
                                 <th class="col-1" style="position:sticky; top:-1px;background-color:#FFF">
                                     Number
                                 </th>
-                                <th class="col-3" style="position:sticky; top:-1px;background-color:#FFF">
+                                <th class="col-2" style="position:sticky; top:-1px;background-color:#FFF">
                                     Date
                                 </th>
                                 <th class="col-2" style="position:sticky; top:-1px;background-color:#FFF">
                                     Temperature(˚C)
                                 </th>
-                                <th class="col-3" style="position:sticky; top:-1px;background-color:#FFF">
+                                <th class="col-2" style="position:sticky; top:-1px;background-color:#FFF">
                                     Heartbeat(bpm)
                                 </th>
-                                <th class="col-3" style="position:sticky; top:-1px;background-color:#FFF">
+                                <th class="col-2" style="position:sticky; top:-1px;background-color:#FFF">
                                     Blood Pressure(mmHg)
+                                </th>
+                                <th class="col-2" style="position:sticky; top:-1px;background-color:#FFF">
+                                    Blood Oxygen(mmHg)
                                 </th>
                                 <th class="col-4" style="position:sticky; top:-1px;background-color:#FFF">
                                     Remark
@@ -89,6 +97,9 @@
                                 </td>
                                 <td>
                                     {{healthData.data_bloodPressure_sys}}/{{healthData.data_bloodPressure_dia}}
+                                </td>
+                                <td>
+                                    {{healthData.data_spo2}}
                                 </td>
                                 <td>
                                     {{healthData.remark}}
@@ -163,7 +174,7 @@
                 }
             }
         },
-        plugins: [ChartDataLabels],
+        // plugins: [ChartDataLabels],
     });
     // ========================================================
     var ctx = document.getElementById('chart-HB');
@@ -201,7 +212,7 @@
                 }
             }
         },
-        plugins: [ChartDataLabels],
+        // plugins: [ChartDataLabels],
     });
     // ========================================================
     var ctx = document.getElementById('chart-BP-sys');
@@ -239,7 +250,7 @@
                 }
             }
         },
-        plugins: [ChartDataLabels],
+        // plugins: [ChartDataLabels],
     });
     // ========================================================
     var ctx = document.getElementById('chart-BP-dia');
@@ -277,7 +288,45 @@
                 }
             }
         },
-        plugins: [ChartDataLabels],
+        // plugins: [ChartDataLabels],
+    });
+    // ========================================================
+    var ctx = document.getElementById('chart-Spo2');
+    var data = [{% for value in ImportDatas %} {{Spo2_perTime|return_item:value.id|return_item:0}}, {% endfor %} ];
+    var labels =[{% for value in ImportDatas %} '{{Spo2_perTime|return_item:value.id|return_item:1}}/{{Spo2_perTime|return_item:value.id|return_item:2}}/{{Spo2_perTime|return_item:value.id|return_item:3}}', {% endfor %}];
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Date',
+                borderColor: '#435ebe',
+                fill: false,
+                data: data,
+                datalabels: {
+                    borderWidth: 0.5,
+                    borderRadius: 3,
+                    color: '#f8f9fa',
+                    backgroundColor: '#435ebe',
+                    align: 'top',
+                    anchor: 'start',
+                    font: {
+                        weight: 'bold',
+                    }
+                }
+            }],
+        },
+        options: {
+            responsive: true,
+            plugins:{
+                title: {
+                    display: true,
+                    text: 'Heartbeat Trend',
+                    font:{size:17},
+                }
+            }
+        },
+        // plugins: [ChartDataLabels],
     });
 </script>
 

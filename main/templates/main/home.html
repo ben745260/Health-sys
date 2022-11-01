@@ -25,7 +25,7 @@
               </div>
           </div>
 
-          <div class="card-body" style="height:420px">
+          <div class="card-body" style="height:436px">
             <form action="" method="POST">
               {% csrf_token %}
                 <table>
@@ -55,6 +55,14 @@
                   </tr>
                   <tr>
                     <th>
+                      {{form.data_spo2.label}}(mmHg)
+                    </th>
+                    <td>
+                      {{form.data_spo2}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>
                       {{form.remark.label}}
                     </th>
                     <td>
@@ -63,7 +71,7 @@
                   </tr>
                 </table>
                 <div class="form-group col-md-2">
-                    <input class="btn btn-success" style="margin-top: 10px;" type="submit" value="SAVE" onclick="saveAlert()"/>
+                    <input class="btn btn-success btn-sm" type="submit" value="SAVE" onclick="saveAlert()"/>
                 </div>
               </div>
             </form>
