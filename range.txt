@@ -1,0 +1,44 @@
+temperature:
+    if temp <= 35.0:
+        temp_message = "Hypothermia"
+        temp_advice.append("Your temperature are below normal.")
+
+    elif temp >35 and temp <=37.5:
+        temp_message = "Normal"
+        temp_advice.append("Your temperature are Normal.")
+    elif temp >37.5:
+        temp_message = "Fever"
+        temp_advice.append("Your temperature are above normal.")
+
+========================================
+HeartBeat:
+    if HB < 60 :
+      HB_message = "Bradycardia"
+      HB_advice.append("Your heartbeat below normal.")
+    elif HB >=60 and HB <=100:
+        HB_message = "Normal"
+    elif HB >100:
+        HB_message = "Tachycardia"
+        HB_advice.append("Your heartbeat above normal.")
+============================================
+BloodPressue:
+    if BP_sys < 120 and BP_dia <80 :
+      BP_message = "Normal"
+      BP_advice.append("Your blood pressure are Normal.")
+    elif (BP_sys >=120 and BP_sys <140) and (BP_dia >= 80 and BP_dia < 90):
+      BP_message = "Prehypertension"
+      BP_advice.append("Your blood pressure are at risk.")
+    elif BP_sys >= 140 and BP_dia >=90:
+        BP_message = "Hypertension"
+        BP_advice.append("Your blood pressure are high.")
+===========================================
+Blood Oxygen:
+    if Spo2 < 80 :
+        Spo2_message = "Hypoxemia"
+        Spo2_advice.append("Your heartbeat below normal level.")
+    elif Spo2 >=80 and Spo2 <=100:
+        Spo2_message = "Normal Level"
+        Spo2_advice.append("Your heartbeat are Normal.")
+    elif Spo2 >100:
+      Spo2_message = "High Level"
+      Spo2_advice.append("Your heartbeat above normal level.")
