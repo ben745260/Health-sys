@@ -35,7 +35,12 @@
                 </table>
                 <div class="d-grid gap-2" style="margin-top:5px">
                     <a id="bt-temp-advice" type="button" data-bs-toggle="collapse" class="btn btn-secondary dropdown-toggle"
-                        href="#temp-advice" style="float: left; margin-bottom:5px;">Your temperature is: {{temp_message}}</a>
+                        href="#temp-advice" style="float: left; margin-bottom:5px;">
+                        {% if temp_message != "Temperature Not Yet Upload" %}
+                        Your temperature is:
+                        {% endif %} 
+                        {{temp_message}}
+                    </a>
                 </div>
                 <div class="collapse" id="temp-advice">
                     <div class="card" style="margin-bottom:5px; border-color: black;">
@@ -52,7 +57,12 @@
                 </div>
                 <div class="d-grid gap-2" style="margin-top:5px">
                     <a id="bt-HB-advice" type="button" data-bs-toggle="collapse" class="btn btn-secondary dropdown-toggle"
-                        href="#HB-advice" style="float: left; margin-bottom:5px;">Your Heartbeat is: {{HB_message}}</a>
+                        href="#HB-advice" style="float: left; margin-bottom:5px;">
+                        {% if HB_message != "Heartbeat Not Yet Upload" %}
+                        Your Heartbeat is:
+                        {% endif %} 
+                        {{HB_message}}
+                    </a>
                 </div>
                 <div class="collapse" id="HB-advice">
                     <div class="card" style="margin-bottom:5px; border-color: black;">
@@ -69,7 +79,12 @@
                 </div>
                 <div class="d-grid gap-2" style="margin-top:5px">
                     <a id="bt-BP-advice" type="button" data-bs-toggle="collapse" class="btn btn-secondary dropdown-toggle"
-                        href="#BP-advice" style="float: left; margin-bottom:5px;">Your Blood Pressure is: {{BP_message}}</a>
+                        href="#BP-advice" style="float: left; margin-bottom:5px;">
+                        {% if BP_message != "Blood Pressure Not Yet Upload" %}
+                        Your Blood Pressure is:
+                        {% endif %} 
+                        {{BP_message}}
+                    </a>
                 </div>
                 <div class="collapse" id="BP-advice">
                     <div class="card" style="margin-bottom:5px; border-color: black;">
@@ -86,7 +101,12 @@
                 </div>
                 <div class="d-grid gap-2" style="margin-top:5px">
                     <a id="bt-Spo2-advice" type="button" data-bs-toggle="collapse" class="btn btn-secondary dropdown-toggle"
-                        href="#Spo2-advice" style="float: left; margin-bottom:5px;">Your Blood Oxygen is: {{Spo2_message}}</a>
+                        href="#Spo2-advice" style="float: left; margin-bottom:5px;">
+                        {% if Spo2_message != "Blood Oxygen Not Yet Upload" %}
+                        Your Blood Oxygen is:
+                        {% endif %} 
+                        {{Spo2_message}}
+                    </a>
                 </div>
                 <div class="collapse" id="Spo2-advice">
                     <div class="card" style="margin-bottom:5px; border-color: black;">

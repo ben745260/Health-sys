@@ -13,7 +13,7 @@
       <div class="card" style="margin-right:20px; margin-left:20px; margin-bottom:5px; border-color: black;">
           <div class="card-header" style="height:50px">
               <div class="row m-0 align-items-center">
-                  <div class="col-10 col-md-10">
+                  <div class="col-9">
                       <h4>Import Health Data 
                         {% if messages %}
                         {% for message in messages %}
@@ -21,6 +21,24 @@
                         {% endfor %}
                         {% endif %}
                       </h4>
+                  </div>
+                  <div class="col-3">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="float:right">
+                      Blood Pressure Guide
+                    </button>
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Guide</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            ...
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
               </div>
           </div>

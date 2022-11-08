@@ -97,7 +97,10 @@ def reportpage(request):
     Spo2_advice = []
 
     # =======================
-    if temp <= 35.0:
+    if temp == 0:
+      temp_message = "Temperature Not Yet Upload"
+      temp_advice.append("You have not upload this data.")
+    elif temp <= 35.0:
       temp_message = "Hypothermia"
       temp_advice.append("Your temperature are below normal.")
       temp_advice.append("Your can...")
@@ -121,7 +124,10 @@ def reportpage(request):
     else:
       temp_message = "error"
     # =======================
-    if HB < 60 :
+    if HB == 0 :
+      HB_message = "Heartbeat Not Yet Upload"
+      HB_advice.append("You have not upload this data.")
+    elif HB < 60 :
       HB_message = "Bradycardia"
       HB_advice.append("Your heartbeat below normal.")
       HB_advice.append("You can...")
@@ -144,7 +150,10 @@ def reportpage(request):
     else:
       HB_message = "error"
     # =======================
-    if BP_sys < 120 and BP_dia <80 :
+    if BP_sys==0 and BP_dia==0 :
+      BP_message = "Blood Pressure Not Yet Upload"
+      BP_advice.append("You have not upload this data.")
+    elif BP_sys < 120 and BP_dia <80 :
       BP_message = "Normal"
       BP_advice.append("Your blood pressure are Normal.")
       BP_advice.append("Keep going!")
@@ -168,7 +177,10 @@ def reportpage(request):
     else:
       BP_message = "error"
     # =======================
-    if Spo2 < 80 :
+    if Spo2 == 0 :
+      Spo2_message = "Blood Oxygen Not Yet Upload"
+      Spo2_advice.append("You have not upload this data.")
+    elif Spo2 < 80 :
       Spo2_message = "Hypoxemia"
       Spo2_advice.append("Your heartbeat below normal level.")
       Spo2_advice.append("You can...")
