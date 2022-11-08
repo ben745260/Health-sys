@@ -182,18 +182,18 @@ def reportpage(request):
       Spo2_advice.append("You have not upload this data.")
     elif Spo2 < 80 :
       Spo2_message = "Hypoxemia"
-      Spo2_advice.append("Your heartbeat below normal level.")
+      Spo2_advice.append("Your heartbeat below normal .")
       Spo2_advice.append("You can...")
       Spo2_advice.append("1. Inhalers with bronchodilators or steroids to help people with lung disease like COPD.")
       Spo2_advice.append("2. Medications that help to get rid of excess fluid in your lungs.")
       Spo2_advice.append("3.  Continuous positive airways pressure mask (CPAP) to treat sleep apnea.")
     elif Spo2 >=80 and Spo2 <=100:
-      Spo2_message = "Normal Level"
+      Spo2_message = "Normal "
       Spo2_advice.append("Your heartbeat are Normal.")
       Spo2_advice.append("Keep going!")
     elif Spo2 >100:
-      Spo2_message = "High Level"
-      Spo2_advice.append("Your heartbeat above normal level.")
+      Spo2_message = "High"
+      Spo2_advice.append("Your heartbeat above normal.")
       Spo2_advice.append("You can...")
       Spo2_advice.append("1. Lie down in the prone position")
       Spo2_advice.append("2. Include more antioxidants in your diet.")
