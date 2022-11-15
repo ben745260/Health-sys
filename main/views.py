@@ -112,7 +112,11 @@ def reportpage(request):
     elif temp >35 and temp <=37.5:
       temp_message = "Normal"
       temp_advice.append("Your temperature are Normal.")
-      temp_advice.append("Keep going!")
+      temp_advice.append("Keep going! You can also maintain normal state by...")
+      temp_advice.append("1. Remove and replace any wet clothing and make sure their head is covered.")
+      temp_advice.append("2. Try to protect the casualty from the ground.")
+      temp_advice.append("3. Take paracetamol or ibuprofen if you feel uncomfortable.")
+      temp_advice.append("4. Stay at home and avoid contact with other people until you do not have a high temperature.")
     elif temp >37.5:
       temp_message = "Fever"
       temp_advice.append("Your temperature are above normal.")
@@ -139,7 +143,10 @@ def reportpage(request):
     elif HB >=60 and HB <=100:
       HB_message = "Normal"
       HB_advice.append("Your heartbeat are Normal.")
-      HB_advice.append("Keep going!")
+      HB_advice.append("Keep going! You can also maintain normal state by...")
+      HB_advice.append("1. Eat a heart-healthy diet that includes vegetables, fruits, nuts, beans, lean meat, fish, and whole grains. Limit alcohol, sodium, and sugar.")
+      HB_advice.append("2. Stay at a healthy weight. Lose weight if you need to.")
+      HB_advice.append("3. Making sure you get enough rest.")
     elif HB >100:
       HB_message = "Tachycardia"
       HB_advice.append("Your heartbeat above normal.")
@@ -156,7 +163,11 @@ def reportpage(request):
     elif BP_sys < 120 and BP_dia <80 :
       BP_message = "Normal"
       BP_advice.append("Your blood pressure are Normal.")
-      BP_advice.append("Keep going!")
+      BP_advice.append("Keep going! You can also maintain normal state by...")
+      BP_advice.append("1. Lose weight if you are overweight.")
+      BP_advice.append("2. Exercise regularly.")
+      BP_advice.append("3. Eat plenty of fruits, vegetables, whole grains, fish, and low-fat dairy.")
+      BP_advice.append("4. Cut back on dietary salt/sodium.")
     elif (BP_sys >=120 and BP_sys <140) and (BP_dia >= 80 and BP_dia < 90):
       BP_message = "Prehypertension"
       BP_advice.append("Your blood pressure are at risk.")
@@ -190,7 +201,10 @@ def reportpage(request):
     elif Spo2 >=80 and Spo2 <=100:
       Spo2_message = "Normal "
       Spo2_advice.append("Your heartbeat are Normal.")
-      Spo2_advice.append("Keep going!")
+      Spo2_advice.append("Keep going! You can also maintain normal state by...")
+      Spo2_advice.append("1. Inhalers with bronchodilators or steroids to help people with lung disease like COPD.")
+      Spo2_advice.append("2. Include more antioxidants in your diet.")
+      Spo2_advice.append("3. Practice slow and deep breathing.")
     elif Spo2 >100:
       Spo2_message = "High"
       Spo2_advice.append("Your heartbeat above normal.")
