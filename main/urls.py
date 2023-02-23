@@ -23,5 +23,7 @@ urlpatterns = [
     path("data/",views.datapage, name="datapage"), 
     path("test/",views.testpage, name="testpage"), 
     path("report/",views.reportpage, name="reportpage"), 
+    path("docCon/",views.docConpage, name="docConpage"), 
+
 
 ]

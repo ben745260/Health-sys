@@ -229,7 +229,59 @@ def reportpage(request):
                     'BP_advice' : BP_advice,
                     'Spo2_advice' : Spo2_advice,
                   })
+# ===============================================================================================
 
+def docConpage(request):
+  healthDatas = HealthData.objects.all()
+  # Array[][0]= value, Array[][1]= day, Array[][2]= month, Array[][3]= year
+  temp_perTime = [[0]*(4) for i in range(int(HealthData.objects.latest('id').id)+1)]
+  HB_perTime = [[0]*(4) for i in range(int(HealthData.objects.latest('id').id)+1)]
+  BP_sys_perTime = [[0]*(4) for i in range(int(HealthData.objects.latest('id').id)+1)]
+  BP_dia_perTime = [[0]*(4) for i in range(int(HealthData.objects.latest('id').id)+1)]
+  Spo2_perTime = [[0]*(4) for i in range(int(HealthData.objects.latest('id').id)+1)]
+
+
+  ImportDatas = HealthData.objects.order_by('saveDate')
+
+  for data in ImportDatas:
+    dataID = data.id
+    temp_perTime[dataID][0] = float(data.data_temperature)
+    temp_perTime[dataID][1] = int(data.saveDate.day)
+    temp_perTime[dataID][2] = int(data.saveDate.month)
+    temp_perTime[dataID][3] = int(data.saveDate.year)
+    # =======================
+    HB_perTime[dataID][0] = float(data.data_heartBeat)
+    HB_perTime[dataID][1] = int(data.saveDate.day)
+    HB_perTime[dataID][2] = int(data.saveDate.month)
+    HB_perTime[dataID][3] = int(data.saveDate.year)
+    # =======================
+    BP_sys_perTime[dataID][0] = float(data.data_bloodPressure_sys)
+    BP_sys_perTime[dataID][1] = int(data.saveDate.day)
+    BP_sys_perTime[dataID][2] = int(data.saveDate.month)
+    BP_sys_perTime[dataID][3] = int(data.saveDate.year)
+    # =======================
+    BP_dia_perTime[dataID][0] = float(data.data_bloodPressure_dia)
+    BP_dia_perTime[dataID][1] = int(data.saveDate.day)
+    BP_dia_perTime[dataID][2] = int(data.saveDate.month)
+    BP_dia_perTime[dataID][3] = int(data.saveDate.year)
+    # =======================
+    Spo2_perTime[dataID][0] = float(data.data_spo2)
+    Spo2_perTime[dataID][1] = int(data.saveDate.day)
+    Spo2_perTime[dataID][2] = int(data.saveDate.month)
+    Spo2_perTime[dataID][3] = int(data.saveDate.year)
+
+
+  return render(request = request,
+                template_name='main/docCon.html',
+                context = {
+                  'healthDatas': healthDatas,
+                  'ImportDatas' : ImportDatas,
+                  'temp_perTime' : temp_perTime,
+                  'HB_perTime' : HB_perTime,
+                  'BP_sys_perTime' : BP_sys_perTime,
+                  'BP_dia_perTime' : BP_dia_perTime,
+                  'Spo2_perTime' : Spo2_perTime,
+                })
 # ===============================================================================================
 
 def testpage(request):

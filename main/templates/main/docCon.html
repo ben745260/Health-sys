@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Doctor Consultation</title>
+</head>
+{% include 'includes/base.html' %}
+{% load getValue %}
+
+<body>
+    <section class="section mt-3">
+        <!-- Detail List Table -->
+        <div class="card" style="margin-right:20px; margin-left:20px; margin-bottom:5px; border-color: black;">
+            <div class="card-body">
+                <table id="table1" class="table table-hover table-small"
+                    style="height: 350px; width: 100%; display: block; overflow-y: scroll;">
+                    <thead>
+                        <tr>
+                            <th class="col-1" style="position:sticky; top:-1px;background-color:#FFF">
+                                Number
+                            </th>
+                            <th class="col-2" style="position:sticky; top:-1px;background-color:#FFF">
+                                Date
+                            </th>
+                            <th class="col-2" style="position:sticky; top:-1px;background-color:#FFF">
+                                Time
+                            </th>
+                            <th class="col-2" style="position:sticky; top:-1px;background-color:#FFF">
+                                Clinics
+                            </th>
+                            <th class="col-2" style="position:sticky; top:-1px;background-color:#FFF">
+                                Doctor
+                            </th>
+                            <th class="col-2" style="position:sticky; top:-1px;background-color:#FFF">
+                                Contact
+                            </th>
+                            <th class="col-4" style="position:sticky; top:-1px;background-color:#FFF">
+                                Remark
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                1
+                            </td>
+                            <td>
+                                06/11/2023
+                            </td>
+                            <td>
+                                3:00 P.M.
+                            </td>
+                            <td>
+                                Medicine
+                            </td>
+                            <td>
+                                Dr. Chan
+                            </td>
+                            <td>
+                                chan0812@hotmail.com
+                            </td>
+                            <td>
+                                
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                2
+                            </td>
+                            <td>
+                                21/11/2023
+                            </td>
+                            <td>
+                                11:00 A.M.
+                            </td>
+                            <td>
+                                Eye
+                            </td>
+                            <td>
+                                Dr. Lee
+                            </td>
+                            <td>
+                                wclee@hotmail.com
+                            </td>
+                            <td>
+                                Bring Sunglasses
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                3
+                            </td>
+                            <td>
+                                11/01/2024
+                            </td>
+                            <td>
+                                2:00 A.M.
+                            </td>
+                            <td>
+                                Eye
+                            </td>
+                            <td>
+                                Dr. Lee
+                            </td>
+                            <td>
+                                wclee@hotmail.com
+                            </td>
+                            <td>
+                               
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+    </section>
+</body>
+
+</html>
+
+<script>
+    // Simple Datatable
+    let table1 = document.querySelector('#table1');
+    let dataTable1 = new simpleDatatables.DataTable(table1);
+
+    function resizeIt(textarea) {
+        textarea.style.height = "";
+        textarea.style.height = this.scrollHeight + 2 + "px";
+    }
+    $('tbody tr').on('click', function () {
+        var trs = document.querySelectorAll("tr");
+        trs.forEach(function (tr) {
+            tr.removeAttribute('style');
+        })
+        $(this).css("--bs-table-accent-bg", "rgba(0, 0, 0, 0.075)")
+        // color: var(--bs-table-hover-color);
+    });
+</script>
+
+<script>
+    var ctx = document.getElementById('chart-temp');
+    var data = [{% for value in ImportDatas %} { { temp_perTime | return_item: value.id | return_item: 0 } }, {% endfor %} ];
+    var labels = [{% for value in ImportDatas %} '{{temp_perTime|return_item:value.id|return_item:1}}/{{temp_perTime|return_item:value.id|return_item:2}}/{{temp_perTime|return_item:value.id|return_item:3}}', {% endfor %}];
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Date',
+                borderColor: '#435ebe',
+                fill: false,
+                data: data,
+                datalabels: {
+                    borderWidth: 0.5,
+                    borderRadius: 3,
+                    color: '#f8f9fa',
+                    backgroundColor: '#435ebe',
+                    align: 'top',
+                    anchor: 'start',
+                    font: {
+                        weight: 'bold',
+                    }
+                }
+            }],
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Temperature(˚C) Trend',
+                    font: { size: 17 },
+                }
+            }
+        },
+        // plugins: [ChartDataLabels],
+    });
+    // ========================================================
+    var ctx = document.getElementById('chart-HB');
+    var data = [{% for value in ImportDatas %} { { HB_perTime | return_item: value.id | return_item: 0 } }, {% endfor %} ];
+    var labels = [{% for value in ImportDatas %} '{{HB_perTime|return_item:value.id|return_item:1}}/{{HB_perTime|return_item:value.id|return_item:2}}/{{HB_perTime|return_item:value.id|return_item:3}}', {% endfor %}];
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Date',
+                borderColor: '#435ebe',
+                fill: false,
+                data: data,
+                datalabels: {
+                    borderWidth: 0.5,
+                    borderRadius: 3,
+                    color: '#f8f9fa',
+                    backgroundColor: '#435ebe',
+                    align: 'top',
+                    anchor: 'start',
+                    font: {
+                        weight: 'bold',
+                    }
+                }
+            }],
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'HeartBeat(bpm) Trend',
+                    font: { size: 17 },
+                }
+            }
+        },
+        // plugins: [ChartDataLabels],
+    });
+    // ========================================================
+    var ctx = document.getElementById('chart-BP-sys');
+    var data = [{% for value in ImportDatas %} { { BP_sys_perTime | return_item: value.id | return_item: 0 } }, {% endfor %} ];
+    var labels = [{% for value in ImportDatas %} '{{BP_sys_perTime|return_item:value.id|return_item:1}}/{{BP_sys_perTime|return_item:value.id|return_item:2}}/{{BP_sys_perTime|return_item:value.id|return_item:3}}', {% endfor %}];
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Date',
+                borderColor: '#435ebe',
+                fill: false,
+                data: data,
+                datalabels: {
+                    borderWidth: 0.5,
+                    borderRadius: 3,
+                    color: '#f8f9fa',
+                    backgroundColor: '#435ebe',
+                    align: 'top',
+                    anchor: 'start',
+                    font: {
+                        weight: 'bold',
+                    }
+                }
+            }],
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Blood Pressure Systolic(mmHg) Trend',
+                    font: { size: 17 },
+                }
+            }
+        },
+        // plugins: [ChartDataLabels],
+    });
+    // ========================================================
+    var ctx = document.getElementById('chart-BP-dia');
+    var data = [{% for value in ImportDatas %} { { BP_dia_perTime | return_item: value.id | return_item: 0 } }, {% endfor %} ];
+    var labels = [{% for value in ImportDatas %} '{{BP_dia_perTime|return_item:value.id|return_item:1}}/{{BP_dia_perTime|return_item:value.id|return_item:2}}/{{BP_dia_perTime|return_item:value.id|return_item:3}}', {% endfor %}];
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Date',
+                borderColor: '#435ebe',
+                fill: false,
+                data: data,
+                datalabels: {
+                    borderWidth: 0.5,
+                    borderRadius: 3,
+                    color: '#f8f9fa',
+                    backgroundColor: '#435ebe',
+                    align: 'top',
+                    anchor: 'start',
+                    font: {
+                        weight: 'bold',
+                    }
+                }
+            }],
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Blood Pressure Diastolic(mmHg) Trend',
+                    font: { size: 17 },
+                }
+            }
+        },
+        // plugins: [ChartDataLabels],
+    });
+    // ========================================================
+    var ctx = document.getElementById('chart-Spo2');
+    var data = [{% for value in ImportDatas %} { { Spo2_perTime | return_item: value.id | return_item: 0 } }, {% endfor %} ];
+    var labels = [{% for value in ImportDatas %} '{{Spo2_perTime|return_item:value.id|return_item:1}}/{{Spo2_perTime|return_item:value.id|return_item:2}}/{{Spo2_perTime|return_item:value.id|return_item:3}}', {% endfor %}];
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Date',
+                borderColor: '#435ebe',
+                fill: false,
+                data: data,
+                datalabels: {
+                    borderWidth: 0.5,
+                    borderRadius: 3,
+                    color: '#f8f9fa',
+                    backgroundColor: '#435ebe',
+                    align: 'top',
+                    anchor: 'start',
+                    font: {
+                        weight: 'bold',
+                    }
+                }
+            }],
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Blood Oxygen(%) Trend',
+                    font: { size: 17 },
+                }
+            }
+        },
+        // plugins: [ChartDataLabels],
+    });
+</script>
+
+<script>
+    $("#chart_card_1").hide();
+    function changeYearFunc(z) {
+        {% for i in return_years %}
+        if (z == {{ forloop.counter }
+    }) {
+        var currentYear = document.getElementById("selectType").value;
+        $("#chart_card_" + currentYear).hide();
+        $("#chart_card_{{forloop.counter}}").show();
+    }
+    {% endfor %}
+            
+        }
+</script>
