@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Import Data</title>
+  {% load static %}
+</head>
+{% include 'includes/baseDoc.html' %}
+
+<body>
+  {{saved}}
+  <section class="section mt-3">
+    <div class="card" style="margin-right:20px; margin-left:20px; margin-bottom:5px; border-color: black;">
+      <div class="card-header" style="height:50px">
+        <div class="row m-0 align-items-center">
+          <div class="col-9">
+            <h4>Import New Patient Doctor Consultation
+              {% if messages %}
+              {% for message in messages %}
+              ({{ message }})
+              {% endfor %}
+              {% endif %}
+            </h4>
+          </div>
+          <div class="col-3">
+            <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="float:right">
+                      Blood Pressure Sensor Guide
+                    </button> -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Guide</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    1.Wear the cuff on the upper arm and position the sensor properly<br>
+                    2.The OLED will show the waveform of blood pressure by a chart<br>
+                    3.Now press the "Air Pump" until it reaches 130mmHg(You can see the value changing in the serial
+                    monitor)<br>
+                    4.Wait for the blood pressure to reduce gradually and observe the blood pressure waveform to reach
+                    max and steady amplitude<br>
+                    5.Press button A to record pressure as the Systolic Blood Pressure<br>
+                    6.Continue observing the amplitude until it reduces to around half the peak value<br>
+                    7.Press button B to record the pressure as the Diastolic Blood Pressure<br>
+                    8.The measuring will be stopped once Diastolic Blood Pressure's value been recorded<br>
+                    9.Press the "Air Valve" Button to release the cuff pressure fully
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <form action="" method="POST">
+          {% csrf_token %}
+          <table>
+            <tr>
+              <th>
+                Patient id
+              </th>
+              <td>
+                <input type="number">
+              </td>
+            </tr>
+            <tr>
+              <th>
+                Date
+              </th>
+              <td>
+                <input type="date">
+              </td>
+            </tr>
+            <tr>
+              <th>
+                Time
+              </th>
+              <td>
+                <input type="time">
+              </td>
+            </tr>
+            <tr>
+            <tr>
+              <th>
+                Clinic
+              </th>
+              <td>
+                <input type="text">
+              </td>
+            </tr>
+            <tr>
+              <th>
+                Doctor
+              </th>
+              <td>
+                <input type="text">
+              </td>
+            </tr>
+            <tr>
+              <th>
+                Contact
+              </th>
+              <td>
+                <input type="email">
+              </td>
+            </tr>
+            <tr>
+            <th>
+              {{form.remark.label}}
+            </th>
+            <td>
+              {{form.remark}}
+            </td>
+            </tr>
+          </table>
+          <div class="form-group col-md-2">
+            <input class="btn btn-success btn-sm" type="submit" value="SAVE" onclick="saveAlert()" />
+          </div>
+      </div>
+      </form>
+    </div>
+    </div>
+  </section>
+</body>
+
+</html>
+<script>
+  // function saveAlert(){
+  //   if($('#id_data_temperature').value >= 0 && $('#id_data_heartBeat').value >= 0 && $('#id_data_bloodPressure').value >= 0){
+  //   alert("Saved Successfully")
+  //   }
+  // }
+
+  $(document).ready(function () {
+    GetData();
+  });
+
+  function GetData() {
+    var url =
+      'https://api.thingspeak.com/channels/1897432/feeds.json?api_key=YEIG305U41JZMZ0O&results=2';
+    // project
+
+    $.ajax({
+      url: url,
+      type: 'GET',
+      contentType: 'application/json',
+      //dataType: "json",
+      //crossDomain: true,
+      success: function (data, textStatus, xhr) {
+        $.each(data, function (i, item) {
+          if (i == 'feeds') {
+            var ubound = item.length;
+            $('#id_data_temperature').val(item[ubound - 1].field1);
+            $('#id_data_heartBeat').val(item[ubound - 1].field2);
+            $('#id_data_bloodPressure_sys').val(item[ubound - 1].field3);
+            $('#id_data_bloodPressure_dia').val(item[ubound - 1].field4);
+            $('#id_data_spo2').val(item[ubound - 1].field5);
+          }
+        });
+      },
+      error: function (xhr, textStatus, errorThrown) {
+        alert(errorThrown);
+      },
+    });
+
+  }
+</script>

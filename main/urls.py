@@ -24,6 +24,5 @@ urlpatterns = [
     path("test/",views.testpage, name="testpage"), 
     path("report/",views.reportpage, name="reportpage"), 
     path("docCon/",views.docConpage, name="docConpage"), 
-
-
+    path("newdocCon/",views.newdocConpage, name="newdocConpage"), 
 ]

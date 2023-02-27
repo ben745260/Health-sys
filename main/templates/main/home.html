@@ -6,7 +6,7 @@
     <title>Import Data</title>
     {% load static %}
   </head>
-  {% include 'includes/base.html' %}
+  {% include 'includes/baseDoc.html' %}
   <body>
     {{saved}}
     <section class="section mt-3">
@@ -14,7 +14,7 @@
           <div class="card-header" style="height:50px">
               <div class="row m-0 align-items-center">
                   <div class="col-9">
-                      <h4>Import Health Data 
+                      <h4>Import New Patient Health Data 
                         {% if messages %}
                         {% for message in messages %}
                          ({{ message }})
@@ -23,9 +23,9 @@
                       </h4>
                   </div>
                   <div class="col-3">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="float:right">
+                    <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="float:right">
                       Blood Pressure Sensor Guide
-                    </button>
+                    </button> -->
                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                       <div class="modal-dialog">
                         <div class="modal-content">
@@ -51,10 +51,18 @@
               </div>
           </div>
 
-          <div class="card-body" style="height:436px">
+          <div class="card-body">
             <form action="" method="POST">
               {% csrf_token %}
                 <table>
+                  <tr>
+                    <th>
+                      Patient id
+                    </th>
+                    <td>
+                      <input type="number">
+                    </td>
+                  </tr>
                   <tr>
                     <th>
                       {{form.data_temperature.label}}(˚C)

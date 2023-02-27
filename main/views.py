@@ -293,6 +293,26 @@ def testpage(request):
                     'healthDatas': healthDatas,
                     'newestData' : newestData,
                   })
+# ===============================================================================================
+
+def newdocConpage(request):
+    healthDatas = HealthData.objects.all()
+    form = HealthDataForm()
+    status = 0
+    if request.method == 'POST':
+        form = HealthDataForm(request.POST)
+        if form.is_valid():
+            form.save()
+            status = 1
+            messages.success(request, f"New Data Saved")
+            return redirect('/')            
+
+    return render(request = request,
+                  template_name='main/newdocCon.html',
+                  context = {
+                    'form':form,
+                    'healthDatas':healthDatas,
+                  })
 
 
 
