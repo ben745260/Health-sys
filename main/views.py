@@ -69,6 +69,9 @@ def datapage(request):
     Spo2_perTime[dataID][2] = int(data.saveDate.month)
     Spo2_perTime[dataID][3] = int(data.saveDate.year)
 
+    patient_id = [1,2,3,4,5,6,7,8,9,10]
+    staffName = ["Dr.Lee", "Dr.Lam" ,"Dr.Lee","Dr.Lam","Dr.Chan","Dr.Chan", "Dr. Kim","Dr.Leung","Dr.lee","Dr.lee"]
+    staffPos = ["Doctor", "Pharmacists","Doctor","Pharmacists", "Therapeutic radiographers","Therapeutic radiographers","Therapeutic radiographers","Therapeutic radiographers","Doctor","Doctor",]
 
   return render(request = request,
                 template_name='main/data.html',
@@ -80,6 +83,9 @@ def datapage(request):
                   'BP_sys_perTime' : BP_sys_perTime,
                   'BP_dia_perTime' : BP_dia_perTime,
                   'Spo2_perTime' : Spo2_perTime,
+                  "patient_id" : patient_id,
+                  "staffName" : staffName,
+                  "staffPos" : staffPos,
                 })
 # ===============================================================================================
 

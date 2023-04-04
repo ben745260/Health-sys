@@ -54,7 +54,7 @@
             <p style="margin: 15px;"></p>
             <div class="card" style="margin-right:20px; margin-left:20px; margin-bottom:5px; border-color: black;">
                 <div class="card-body">
-                    <table id="table1" class="table table-hover table-small" style="height: 350px; width: 100%; display: block; overflow-y: scroll;">
+                    <table id="table1" class="table table-hover table-small" style="height: 500px; width: 100%; display: block; overflow-y: scroll;">
                         <thead>
                             <tr>
                                 <th class="col-1" style="position:sticky; top:-1px;background-color:#FFF">
@@ -62,6 +62,15 @@
                                 </th>
                                 <th class="col-2" style="position:sticky; top:-1px;background-color:#FFF">
                                     Date
+                                </th>
+                                <th class="col-2" style="position:sticky; top:-1px;background-color:#FFF">
+                                    Patient Id
+                                </th>
+                                <th class="col-2" style="position:sticky; top:-1px;background-color:#FFF">
+                                    Staff Name
+                                </th>
+                                <th class="col-2" style="position:sticky; top:-1px;background-color:#FFF">
+                                    Staff Position
                                 </th>
                                 <th class="col-2" style="position:sticky; top:-1px;background-color:#FFF">
                                     Temperature(˚C)
@@ -74,6 +83,9 @@
                                 </th>
                                 <th class="col-2" style="position:sticky; top:-1px;background-color:#FFF">
                                     Blood Oxygen(%)
+                                </th>
+                                <th class="col-4" style="position:sticky; top:-1px;background-color:#FFF">
+                                    Document
                                 </th>
                                 <th class="col-4" style="position:sticky; top:-1px;background-color:#FFF">
                                     Remark
@@ -90,6 +102,15 @@
                                     {{healthData.saveDate}}
                                 </td>
                                 <td>
+                                    {{patient_id|return_item:forloop.counter}}
+                                </td>
+                                <td>
+                                    {{staffName|return_item:forloop.counter}}
+                                </td>
+                                <td>
+                                    {{staffPos|return_item:forloop.counter}}
+                                </td>
+                                <td>
                                     {{healthData.data_temperature}}
                                 </td>
                                 <td>
@@ -100,6 +121,9 @@
                                 </td>
                                 <td>
                                     {{healthData.data_spo2}}
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-secondary">Detail</button>
                                 </td>
                                 <td>
                                     {{healthData.remark}}
