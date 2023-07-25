@@ -2,6 +2,9 @@
 Install django 
 >$pip install Django
 
+Run pipenv
+>$pipenv shell
+
 Install python pip requiement list
 >$pip install -r requirements.txt 
 
